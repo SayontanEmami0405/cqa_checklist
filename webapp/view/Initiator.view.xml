@@ -1,0 +1,91 @@
+<mvc:View
+    controllerName="com.emami.cqachecklist.zcqachecklist.controller.Initiator"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="InitiatorPage"
+        title="{i18n>title}"
+    > 
+     <!-- ✅ LOGOUT BUTTON IN PAGE HEADER -->
+        <headerContent>
+            <Button
+                icon="sap-icon://log"
+                text="Logout"
+                press="onLogout"
+                type="Reject" />
+        </headerContent>
+        <content>
+
+            <IconTabBar>
+                <items>
+                    <IconTabFilter
+                        icon="sap-icon://customer"
+                        text="Initiator"
+                        iconColor="Neutral"
+
+                    > 
+                    <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.SummaryDialog"
+                            type="XML"
+                        />
+
+                    <Bar>
+                        <contentRight>
+                                <Button text="Clear"  type="Emphasized" press="onPressClear" />
+                            </contentRight>
+                        </Bar>
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.InputHeader"
+                            type="XML"
+                        />
+                        <VBox id="myFragmentBox" visible="{jsonCentralModel>/Visible/ShowChecklist}">
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.Checklist"
+                            type="XML"
+                        />
+                        </VBox>
+                        <VBox id="myAttachemntBox" visible="{jsonCentralModel>/Visible/ShowAttachment}">
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.Attachments"
+                            type="XML"
+                        />
+                        </VBox>
+                        
+                        
+                        
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+
+        </content>
+        <footer>
+            <Bar>
+                <contentMiddle>
+                    <Button
+                        type="Emphasized"
+                        text="Save as Draft"
+                        press="onPressSave"
+                        visible="{jsonCentralModel>/Visible/InitiatorSaveBtn}"
+                    />
+                    <Button
+                        type="Emphasized"
+                        text="Initiate Task"
+                        press="onPressInitateApproval"
+                        visible="{jsonCentralModel>/Visible/InitiatorInitiateBtn}"
+                    />
+                    <Button
+                        text="Delete"
+                        type="Reject" press="onPressDeleteItem"
+                        visible="{jsonCentralModel>/Visible/InitiatorDeleteBtn}"
+                    />
+                </contentMiddle>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
+
+
+

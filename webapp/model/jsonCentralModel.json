@@ -1,0 +1,133 @@
+{
+  "UserInfo": {},
+  "CheckListInfo": {
+    "Checklist": [
+      {
+        "SLNO": 1,
+        "ChecklistText": "Confirmation on manufacturing set up (As per TTD/PTD)",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 2,
+        "ChecklistText": "Confirmation on Packing set up (As per PI)",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 3,
+        "ChecklistText": "Confirmation on Analytical set up (As per Intermediate/ Bulk/FG Spec)",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 4,
+        "ChecklistText": "Availability of FG/WIP BOM in SAP",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 5,
+        "ChecklistText": "Confirmation on Label",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 6,
+        "ChecklistText": "Confirmation on Shade Card",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 7,
+        "ChecklistText": "Confirmation on Shelf Life and MRP",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 8,
+        "ChecklistText": "Confirmation on Task list updation",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 9,
+        "ChecklistText": "Confirmation of Standard sample",
+        "SelectedOption": "",
+        "Score": 0
+      },
+      {
+        "SLNO": 10,
+        "ChecklistText": "Confirmation on License/TTD/ RM / PM/WIP/FG Spec and ATP/AOQL or Terminal Check list",
+        "SelectedOption": "",
+        "Score": 0
+      }
+    ],
+    "TotalScore": 0
+  },
+  "Data": {
+    "FormData": {
+      "FgCode": "",
+      "FgDescription": "",
+      "Plant": "",
+      "ProjectType": "",
+      "BatchNumber": "",
+      "InitiationDate": "",
+      "Sku": "",
+      "ChecklistNumber": "",
+      "Option1": "",
+      "Option2": "",
+      "Option3": "",
+      "Option4": "",
+      "Option5": "",
+      "Option6": "",
+      "Option7": "",
+      "Option8": "",
+      "Option9": "",
+      "Option10": "",
+      "TotalScore": 0
+    }
+  },
+  "Editable": {
+    "All": true,
+    "ChecklistNumber": false,
+    "FgCode": false,
+    "FgDescription": false,
+    "Plant": false,
+    "ProjectType": false,
+    "BatchNumber": false,
+    "InitiationDate": false,
+    "Sku": false,
+    "Option1": false,
+    "Option2": false,
+    "Option3": false,
+    "Option4": false,
+    "Option5": false,
+    "Option6": false,
+    "Option7": false,
+    "Option8": false,
+    "Option9": false,
+    "Option10": false,
+    "Options": false
+  },
+  "Visible": {
+    "ShowReviewer": true,
+    "ShowApprover": true,
+    "InitiatorSaveBtn": true,
+    "InitiatorInitiateBtn": false,
+    "InitiatorDeleteBtn": false,
+    "SendBackToInitiatorBtn": false,
+    "ReviewerInitiateBtn": false,
+    "ReviewerSaveBtn": false,
+    "ApproverAcceptBtn": false,
+    "SendBackToReviewerBtn": false,
+    "Remarks": false,
+    "FileUploaderControl": false,
+    "UploadFileBtn": false,
+    "FileUploaderControlDialog": false,
+    "UploadFileDialogBtn": false,
+    "AttachementDeleteBtn": false,
+    "ShowChecklist": false,
+    "ShowAttachment": false
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "_version": "1.17.0",
+  "sap.app": {
+    "id": "com.emami.cqachecklist.zcqachecklist",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.3",
+      "toolsId": "5cc9cd66-85c4-4f7c-a2e7-2c15e114b2c5"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZPP_CQA_CHECKLIST_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "jsonCentralModel": {
+        "uri": "model/jsonCentralModel.json",
+        "type": "JSON"
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "zcqachecklist-manage": {
+          "semanticObject": "zcqachecklist",
+          "action": "manage",
+          "title": "{{zcqachecklist-manage.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.71.67",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.export": {},
+        "sap.ui.core": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.emami.cqachecklist.zcqachecklist.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultUpdateMethod": "PUT"
+        } 
+      },
+      "jsonCentralModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "jsonCentralModel"
+      },
+      "jsonFgCodeListModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "jsonPlantListModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "jsonCQASummaryModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "jsonChecklistListModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "jsonAttachmentListModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "jsonDialogAttachmentListModel": {
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.emami.cqachecklist.zcqachecklist.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "RouteHome",
+          "pattern": ":?query:",
+          "target": [
+            "TargetHome"
+          ]
+        },
+        {
+          "name": "RouteInitiator",
+          "pattern": "Initiator",
+          "target": [
+            "TargetInitiator"
+          ]
+        },
+        {
+          "name": "RouteReviewer",
+          "pattern": "Reviewer",
+          "target": [
+            "TargetReviewer"
+          ]
+        },
+        {
+          "name": "RouteApprover",
+          "pattern": "Approver",
+          "target": [
+            "TargetApprover"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetHome": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Home",
+          "viewName": "Home"
+        },
+        "TargetInitiator": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Initiator",
+          "viewName": "Initiator"
+        },
+        "TargetReviewer": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Reviewer",
+          "viewName": "Reviewer"
+        },
+        "TargetApprover": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Approver",
+          "viewName": "Approver"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.emami.cqachecklist.zcqachecklist.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

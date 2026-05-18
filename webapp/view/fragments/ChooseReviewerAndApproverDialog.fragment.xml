@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form">
+	<Dialog id="idReviewerApproverDialog" title="Confirm" contentHeight="65%" contentWidth="30%">
+		<f:Form id="idSimpleFormReviewerApproverDialog">
+			<f:layout>
+				<f:ColumnLayout columnsM="1" columnsL="1" columnsXL="1"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer> 
+					<f:formElements>
+						<f:FormElement label="Site User" visible="{jsonCentralModel>/Visible/ShowReviewer}">
+							<f:fields>
+								<Select  id="idReviewerDialog" items="{ReviewerJsonModel>/}" forceSelection="false">
+									<core:Item text="{ReviewerJsonModel>Name}" key="{ReviewerJsonModel>Uname}"/>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="Approver" visible="{jsonCentralModel>/Visible/ShowApprover}">
+							<f:fields>
+								<Select  id="idApproverDialog" items="{ApproverJsonModel>/}" forceSelection="false">
+									<core:Item text="{ApproverJsonModel>Name}" key="{ApproverJsonModel>Uname}"/>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="Remarks" >
+							<f:fields>
+								<TextArea  height="10rem"  width="100%" id="idInitRemarks"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<buttons>
+			<Button text="Confirm" type="Emphasized" press="onConfirmChooseReviewerAndApproverDialog"/>
+			<Button text="Cancel" press="onCancelChooseReviewerAndApproverDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

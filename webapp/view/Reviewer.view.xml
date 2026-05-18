@@ -1,0 +1,102 @@
+<mvc:View
+    controllerName="com.emami.cqachecklist.zcqachecklist.controller.Reviewer"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="ReviewerPage"
+        title="{i18n>title}"
+    > 
+     <!-- ✅ LOGOUT BUTTON IN PAGE HEADER -->
+        <headerContent>
+            <Button
+                icon="sap-icon://log"
+                text="Logout"
+                press="onLogout"
+                type="Reject" />
+        </headerContent>
+        <content>
+        <IconTabBar>
+                <items>
+                    <IconTabFilter
+                        icon="sap-icon://rhombus-milestone-2"
+                        text="Site USer"
+                        iconColor="Critical"
+
+                    >
+                    <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.SummaryDialog"
+                            type="XML"
+                        />
+<Label
+                            text="Checklist Number"
+                            class="sapUiSmallMarginBegin sapUiSmallMarginTop textBold"
+                            design="Bold"
+                        />
+                        <OverflowToolbar>
+                            <Input
+                                id="idChecklistNumber"
+                                placeholder="Select Checklist Number"
+                                width="12rem"
+                                valueHelpOnly="true"
+                                showValueHelp="true"
+                                valueHelpRequest="onValuehelpChecklistNumber"
+                            />
+                            <Button
+                                press="onPressSearchReviwer"
+                                icon="sap-icon://search"
+                            />
+                            <Button
+                                text="Clear"
+                                press="onPressClear"
+                                type="Emphasized"
+                            />
+                        </OverflowToolbar>
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.InputHeader"
+                            type="XML"
+                        />
+
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.Checklist"
+                            type="XML"
+                        />
+                        <core:Fragment
+                            fragmentName="com.emami.cqachecklist.zcqachecklist.view.fragments.Attachments"
+                            type="XML"
+                        />
+                        
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+        <footer>
+            <Bar>
+                <contentMiddle>
+                    <Button
+                        type="Emphasized"
+                        text="Save"
+                        press="onPressSave"
+                        visible="{jsonCentralModel>/Visible/ReviewerSaveBtn}"
+                    />
+                    <Button
+                        type="Emphasized"
+                        text="Forward To Approver"
+                        press="onPressForwardToApprover"
+                        visible="{jsonCentralModel>/Visible/ReviewerInitiateBtn}"
+                    />
+                    <Button
+                        text="Send Back to Initiator"
+                        type="Reject" press="onPressSendBackToInitiator"
+                        visible="{jsonCentralModel>/Visible/SendBackToInitiatorBtn}"
+                    />
+                </contentMiddle>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
+
+
+

@@ -1,0 +1,186 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Label
+        text="Summary"
+        class="sapUiSmallMarginBegin sapUiSmallMarginTop textBold"
+        design="Bold"
+    />
+    <OverflowToolbar>
+        <DateRangeSelection
+            id="idDR"
+            width="15rem"
+            placeholder="Enter date range"
+            displayFormat="dd.MM.yyyy"
+            class="sapUiSmallMarginBegin"
+        />
+        <Button
+            press="onPressDRSearch"
+            icon="sap-icon://search"
+        />
+        <Button
+            press="onPressDRClear"
+            icon="sap-icon://clear-filter"
+        />
+
+        <Title
+            text="Pending with me"
+            design="Bold"
+        />
+        <CheckBox id="idPendingWithMe" />
+
+        <ToolbarSpacer />
+        <SearchField
+            id="idSearchInit"
+            width="20rem"
+            liveChange="onFilterCQASummaryList"
+        />
+        <Button
+            text="Clear"
+            press="onPressClearCQASummary"
+        />
+        <Button 
+    text="Export Checklist" 
+    icon="sap-icon://excel-attachment" 
+    press="onExportToExcel"
+    type="Emphasized"
+/>
+<Button 
+    text="Export Summary" 
+    icon="sap-icon://excel-attachment" 
+    press="onExportToExcelSumm"
+    type="Emphasized"
+/>
+    </OverflowToolbar>
+    <Panel>
+        <ScrollContainer
+            horizontal="true"
+            vertical="true"
+            class="dynamicTable"
+        >
+            <Table
+                id="summarytableid"
+                items="{path: 'jsonCQASummaryModel>/'}"
+                mode="None"
+                itemPress="onItemPress"
+                growing="true"
+                growingThreshold="20"
+                sticky="ColumnHeaders"
+            >
+                <columns>
+                <Column
+                        id="columnid9"
+                        width="8rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Checklist Number"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid1"
+                        width="8rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="FG Code"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid2"
+                        width="6rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Plant"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid3"
+                        width="8rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Project Type"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid4"
+                        width="8rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Batch Number"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid5"
+                        width="7rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Created On"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid10"
+                        width="7rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Created By"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid6"
+                        width="7rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Status"
+                            design="Bold"
+                        />
+                    </Column>
+                    <Column
+                        id="columnid7"
+                        width="7rem"
+                        hAlign="Center"
+                    >
+                        <Label
+                            text="Pending With"
+                            design="Bold"
+                        />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <Text text="{jsonCQASummaryModel>ChecklistNumber}" />
+                        <Text text="{jsonCQASummaryModel>FgCode}" />
+                        <Text text="{jsonCQASummaryModel>Plant}" />
+                        <Text text="{jsonCQASummaryModel>ProjectType}" />
+                        <Text text="{jsonCQASummaryModel>BatchNumber}"/>
+                        
+                <Text text="{
+  path: 'jsonCQASummaryModel>InitiationDate',
+  type: 'sap.ui.model.type.Date',
+  formatOptions: { pattern: 'dd/MM/yyyy' }
+}" />
+<Text text="{jsonCQASummaryModel>CreatedBy}" />
+                        <Text
+                            text="{ path: 'jsonCQASummaryModel>Status', formatter: '.formatter.formatStatus' }"
+                        />
+                        <Text text="{jsonCQASummaryModel>PendingWith}" />
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+    </Panel>
+</core:FragmentDefinition>

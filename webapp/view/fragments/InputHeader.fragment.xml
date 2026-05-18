@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Label
+        text="Header Info"
+        class="sapUiSmallMarginBegin sapUiSmallMarginTop textBold"
+        design="Bold"
+    />
+    <Panel>
+        <f:SimpleForm
+            id="intiatorDivision"
+            layout="ResponsiveGridLayout"
+            labelSpanXL="6"
+            labelSpanL="6"
+            labelSpanM="6"
+            labelSpanS="12"
+            adjustLabelSpan="false"
+            emptySpanXL="0"
+            emptySpanL="0"
+            emptySpanM="0"
+            emptySpanS="0"
+            columnsXL="3"
+            columnsL="3"
+            columnsM="3"
+        >
+            <core:Title text="" />
+
+            <Label text="FG/WIP Code" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+            <Input
+                id="idInputFGCode"
+                showValueHelp="true"
+                valueHelpOnly="true"
+                valueHelpRequest="onValueHelpReqFgCode"
+                value="{jsonCentralModel>/Data/FormData/FgCode}"
+                editable="{jsonCentralModel>/Editable/FgCode}"
+            />
+
+            <Label text="FG Description" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+            <Input 
+                id="idInputFGDescription"
+                value="{jsonCentralModel>/Data/FormData/FgDescription}" 
+                editable="{jsonCentralModel>/Editable/FgDescription}"
+                tooltip="{jsonCentralModel>/Data/FormData/FgDescription}" 
+            />
+
+            <Label text="Plant" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+            <Input 
+                id="idInputPlant"
+                showValueHelp="true"
+                valueHelpOnly="true"
+                valueHelpRequest="onValueHelpReqPlant"
+                value="{jsonCentralModel>/Data/FormData/Plant}" 
+                editable="{jsonCentralModel>/Editable/Plant}"
+            />
+
+            <Label text="Project Type" design="Bold" class="sapUiTinyMarginTop" required="true"  />
+            <Input 
+                id="idInputProjectType"
+                value="{jsonCentralModel>/Data/FormData/ProjectType}" 
+                editable="{jsonCentralModel>/Editable/ProjectType}"
+            />
+
+            <core:Title text="" />
+
+            <Label text="Batch No" design="Bold" class="sapUiTinyMarginTop"  />
+            <Input 
+                id="idInputBatchNo"
+                value="{jsonCentralModel>/Data/FormData/BatchNumber}" 
+                editable="{jsonCentralModel>/Editable/BatchNumber}"
+            />
+
+            <Label text="Check List Initiation date" design="Bold" class="sapUiTinyMarginTop"  required="true"  />
+            <DatePicker
+                value="{path : 'jsonCentralModel>/Data/FormData/InitiationDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd/MM/yyyy'}}"
+                valueFormat="dd.MM.yyyy"
+                editable="false"
+            />
+
+            <Label text="SKU" design="Bold" class="sapUiTinyMarginTop"  required="true"  />
+            <Input 
+                id="idInputSku"
+                value="{jsonCentralModel>/Data/FormData/Sku}" 
+                editable="{jsonCentralModel>/Editable/Sku}"
+            />
+
+            <Label text="Checklist Number" design="Bold" class="sapUiTinyMarginTop"  required="true"  />
+            <Input 
+                id="idInputChecklistNumber"
+                value="{jsonCentralModel>/Data/FormData/ChecklistNumber}" 
+                editable="{jsonCentralModel>/Editable/ChecklistNumber}"
+                tooltip="{jsonCentralModel>/Data/FormData/ChecklistNumber}"
+            />
+        </f:SimpleForm>
+    </Panel>
+</core:FragmentDefinition>

@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: com.emami.cqachecklist.zcqachecklist
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          destination: EDS
+          url: http://ppcuser:443
+        app:
+          name: ZCQACHECKLIST
+          description: CQA Checklist
+          package: ZEMAMI
+          transport: EDSK9B072E
+        exclude:
+          - /test/

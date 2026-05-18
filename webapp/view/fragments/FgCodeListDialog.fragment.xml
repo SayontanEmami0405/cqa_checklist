@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+	<TableSelectDialog items="{path: 'jsonFgCodeListModel>/'}" noDataText="No Data" liveChange="onSearchFgCodeDialog" title="FG Code List"
+		confirm="onPressFgCodeDialogLineItem" contentWidth="60%">
+		<columns>
+			<Column hAlign="Center">
+				<Label design="Bold" text="FG Code"/>
+			</Column>
+			<Column hAlign="Center">
+				<Label text="FG Description" design="Bold"/>
+			</Column>
+			<Column hAlign="Center">
+				<Label text="SKU" design="Bold"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{jsonFgCodeListModel>FgCode}"/>
+					<Text text="{jsonFgCodeListModel>FgDescription}"/>
+					<Text text="{jsonFgCodeListModel>Sku}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</TableSelectDialog>
+</core:FragmentDefinition>

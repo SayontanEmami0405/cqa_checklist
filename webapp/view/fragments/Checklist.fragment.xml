@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    
+    <VBox class="sapUiSmallMargin">
+
+        <Table id="idChecklistTable"
+               items="{jsonCentralModel>/CheckListInfo/Checklist}"
+               inset="false"
+               fixedLayout="false"
+               width="100%">
+               
+            <columns>
+                <Column>
+                    <Text text="SL No" />
+                </Column>
+                <Column>
+                    <Text text="CQA Checklist" />
+                </Column>
+                <Column>
+                    <Text text="Option" />
+                </Column>
+                <Column>
+                    <Text text="Score" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{jsonCentralModel>SLNO}" />
+                        <Text text="{jsonCentralModel>ChecklistText}" />
+                        <ComboBox selectedKey="{jsonCentralModel>SelectedOption}" change="onOptionChange" editable="{jsonCentralModel>/Editable/Options}">
+                            <items>
+                                <core:Item key="Yes" text="Yes" />
+                                <core:Item key="No" text="No" /> 
+                                <core:Item key="NA" text="NA" />
+                            </items>
+                        </ComboBox>
+                        <Text text="{jsonCentralModel>Score}" />
+                        
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <Toolbar class="sapUiSmallMarginTop">
+            <ToolbarSpacer />
+            <Text text="Total Score:" />
+            <Text text="{jsonCentralModel>/CheckListInfo/TotalScore}" class="sapUiTinyMarginBegin sapUiTinyMarginEnd" />
+            <Text text="Site is Not Ready" visible="{jsonCentralModel>/Visible/Remarks}"/>
+        </Toolbar>
+
+    </VBox>
+</core:FragmentDefinition>

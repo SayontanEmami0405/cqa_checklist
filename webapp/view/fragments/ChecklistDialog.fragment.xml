@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+	<TableSelectDialog items="{path: 'jsonChecklistListModel>/'}" noDataText="No Data" liveChange="onSearchChecklistNumber" title="Incident List"
+		confirm="onConfirmChecklistNumber" contentWidth="20%">
+		<columns>
+			<Column>
+				<Label design="Bold" text="Checklist Number"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{jsonChecklistListModel>ChecklistNumber}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</TableSelectDialog>
+</core:FragmentDefinition>
