@@ -201,8 +201,11 @@ sap.ui.define(
 
                 // Prepare combined export data
                 var aCombinedData = [];
+                var nFinalScore = 0;
 
                 aChecklist.forEach(function (oItem) {
+                    nFinalScore += Number(oItem.Score) || 0;
+
                     aCombinedData.push({
                         // Header Info
                         FgCode: oFormData.FgCode || "",
@@ -222,6 +225,16 @@ sap.ui.define(
                         Score: oItem.Score || ""
                     });
                 });
+
+                // Final Score summary row
+                if (aChecklist.length > 0) {
+                    aCombinedData.push({
+                        SlNo: "",
+                        ChecklistText: "",
+                        SelectedOption: "Final Score",
+                        Score: nFinalScore
+                    });
+                }
 
                 // Create new model for export
                 var oExportModel = new sap.ui.model.json.JSONModel(aCombinedData);
@@ -333,18 +346,40 @@ sap.ui.define(
                 });
             },
             onPrepareExportSummModel: function () {
+                var that = this;
+
                 // Get main central model
                 var oModel = this.getView().getModel("jsonCQASummaryModel");
-
-
                 var oData = oModel.getData();
+                var aRows = Array.isArray(oData) ? oData : (oData && oData.results) || [];
 
+                var oDataModel = this.getOwnerComponent().getModel();
 
-                // Create new model for export
-                var oExportSummModel = new sap.ui.model.json.JSONModel(oData);
-                this.getView().setModel(oExportSummModel, "jsonExportSummModel");
+                // Fetch FG Description per row from HeaderDataSet (auto-batched by ODataModel v2)
+                var aPromises = aRows.map(function (oRow) {
+                    return new Promise(function (resolve) {
+                        if (!oRow.ChecklistNumber) {
+                            resolve();
+                            return;
+                        }
+                        oDataModel.read("/HeaderDataSet('" + oRow.ChecklistNumber + "')", {
+                            success: function (oResult) {
+                                oRow.FgDescription = oResult.FgDescription;
+                                resolve();
+                            },
+                            error: function () {
+                                oRow.FgDescription = "";
+                                resolve();
+                            }
+                        });
+                    });
+                });
 
-                sap.m.MessageToast.show("Export model prepared successfully!");
+                return Promise.all(aPromises).then(function () {
+                    // Create new model for export
+                    var oExportSummModel = new sap.ui.model.json.JSONModel(aRows);
+                    that.getView().setModel(oExportSummModel, "jsonExportSummModel");
+                });
             },
             onPressDownloadFile: function (oEvent) {
                 // Get the item context
@@ -382,77 +417,82 @@ sap.ui.define(
                 document.body.removeChild(link);
             },
             onExportToExcelSumm: function () {
-                try {
-                    this.onPrepareExportSummModel();
-                    var oModel = this.getView().getModel("jsonExportSummModel");
-                    var aData = oModel.getData();
-                   
-                    const formatDate = (dateObj) => {
-                        if (!dateObj || !(dateObj instanceof Date)) return "";
-
-                        let dd = String(dateObj.getDate()).padStart(2, "0");
-                        let mm = String(dateObj.getMonth() + 1).padStart(2, "0");
-                        let yyyy = dateObj.getFullYear();
-
-                        return `${dd}-${mm}-${yyyy}`;
-                    };
-
-                    aData.forEach(item => {
-                        if (item.CreatedOn) {
-                            item.CreatedOn = formatDate(item.CreatedOn);
-                        }
-                    });
-
-                    oModel.setData(aData);
-                    oModel.refresh(true);
-
-                    if (!aData || aData.length === 0) {
-                        sap.m.MessageToast.show("No data available to export.");
-                        return;
-                    }
-                    // Build dynamic filename based on first row
-                    var sFgCode = aData.FgCode || "FG";
-                    var sDescription = aData.FgDescription || "Description";
-
-                    // Remove spaces & special chars (optional clean)
-                    var sSafeDesc = sDescription.replace(/[^a-zA-Z0-9-_ ]/g, "").replace(/\s+/g, "_");
-
-                    // Final filename
-                    var sFileName = "Summary " + sFgCode + "_" + sSafeDesc + ".xlsx";
-
-                    var oExport = new sap.ui.export.Spreadsheet({
-                        workbook: {
-                            columns: [
-                                { label: "Checklist Number", property: "ChecklistNumber" },
-                                { label: "FG Code", property: "FgCode" },
-                                { label: "Plant", property: "Plant" },
-                                { label: "Division", property: "Plant" },
-                                { label: "Project Type", property: "ProjectType" },
-                                { label: "Batch Number", property: "BatchNumber" },
-                                { label: "Created On", property: "CreatedOn" },
-                                { label: "Created By", property: "CreatedBy" },
-                                { label: "Paending With", property: "PendingWith" },
-                            ]
-                        },
-                        dataSource: aData,
-                        fileName: sFileName,
-                        worker: false
-                    });
-
-                    oExport.build()
-                        .then(function () {
-                            sap.m.MessageToast.show("Export completed successfully!");
-                        })
-                        .catch(function (oError) {
-                            sap.m.MessageBox.error("Export failed: " + oError.message);
-                        })
-                        .finally(function () {
-                            oExport.destroy();
-                        });
-
-                } catch (e) {
+                BusyIndicator.show();
+                this.onPrepareExportSummModel().then(() => {
+                    return this._buildSummaryExcelExport();
+                }).catch((e) => {
                     sap.m.MessageBox.error("Error during export: " + e.message);
+                }).finally(function () {
+                    BusyIndicator.hide();
+                });
+            },
+            _buildSummaryExcelExport: function () {
+                var oModel = this.getView().getModel("jsonExportSummModel");
+                var aData = oModel.getData();
+
+                const formatDate = (dateObj) => {
+                    if (!dateObj || !(dateObj instanceof Date)) return "";
+
+                    let dd = String(dateObj.getDate()).padStart(2, "0");
+                    let mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+                    let yyyy = dateObj.getFullYear();
+
+                    return `${dd}-${mm}-${yyyy}`;
+                };
+
+                aData.forEach(item => {
+                    if (item.CreatedOn) {
+                        item.CreatedOn = formatDate(item.CreatedOn);
+                    }
+                });
+
+                oModel.setData(aData);
+                oModel.refresh(true);
+
+                if (!aData || aData.length === 0) {
+                    sap.m.MessageToast.show("No data available to export.");
+                    return Promise.resolve();
                 }
+                // Build dynamic filename based on first row
+                var sFgCode = aData.FgCode || "FG";
+                var sDescription = aData.FgDescription || "Description";
+
+                // Remove spaces & special chars (optional clean)
+                var sSafeDesc = sDescription.replace(/[^a-zA-Z0-9-_ ]/g, "").replace(/\s+/g, "_");
+
+                // Final filename
+                var sFileName = "Summary " + sFgCode + "_" + sSafeDesc + ".xlsx";
+
+                var oExport = new sap.ui.export.Spreadsheet({
+                    workbook: {
+                        columns: [
+                            { label: "Checklist Number", property: "ChecklistNumber" },
+                            { label: "FG Code", property: "FgCode" },
+                            { label: "FG Description", property: "FgDescription" },
+                            { label: "Plant", property: "Plant" },
+                            { label: "Division", property: "Plant" },
+                            { label: "Project Type", property: "ProjectType" },
+                            { label: "Batch Number", property: "BatchNumber" },
+                            { label: "Created On", property: "CreatedOn" },
+                            { label: "Created By", property: "CreatedBy" },
+                            { label: "Paending With", property: "PendingWith" },
+                        ]
+                    },
+                    dataSource: aData,
+                    fileName: sFileName,
+                    worker: false
+                });
+
+                return oExport.build()
+                    .then(function () {
+                        sap.m.MessageToast.show("Export completed successfully!");
+                    })
+                    .catch(function (oError) {
+                        sap.m.MessageBox.error("Export failed: " + oError.message);
+                    })
+                    .finally(function () {
+                        oExport.destroy();
+                    });
             }
 
 

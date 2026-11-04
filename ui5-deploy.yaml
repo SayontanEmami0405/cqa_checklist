@@ -20,6 +20,6 @@ builder:
           name: ZCQACHECKLIST
           description: CQA Checklist
           package: ZEMAMI
-          transport: EDSK9B072E
+          transport: EDSK9B0D3Q
         exclude:
           - /test/
